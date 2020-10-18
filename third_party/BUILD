@@ -14,8 +14,8 @@
 #
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@rules_android//android:rules.bzl", "android_library")
 load("@rules_foreign_cc//tools/build_defs:cmake.bzl", "cmake_external")
+load("@rules_android//android:rules.bzl", "android_library")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -23,33 +23,32 @@ licenses(["notice"])  # Apache License 2.0
 
 exports_files(["LICENSE"])
 
-
 cc_library(
     name = "glog",
     visibility = ["//visibility:public"],
     deps = select({
-        "//mediapipe:android_x86": [
+        "@mediapipe//mediapipe:android_x86": [
             "@com_github_glog_glog_no_gflags//:glog",
         ],
-        "//mediapipe:android_x86_64": [
+        "@mediapipe//mediapipe:android_x86_64": [
             "@com_github_glog_glog_no_gflags//:glog",
         ],
-        "//mediapipe:android_armeabi": [
+        "@mediapipe//mediapipe:android_armeabi": [
             "@com_github_glog_glog_no_gflags//:glog",
         ],
-        "//mediapipe:android_arm": [
+        "@mediapipe//mediapipe:android_arm": [
             "@com_github_glog_glog_no_gflags//:glog",
         ],
-        "//mediapipe:android_arm64": [
+        "@mediapipe//mediapipe:android_arm64": [
             "@com_github_glog_glog_no_gflags//:glog",
         ],
-        "//mediapipe:ios": [
+        "@mediapipe//mediapipe:ios": [
             "@com_github_glog_glog_no_gflags//:glog",
         ],
-        "//mediapipe:macos": [
+        "@mediapipe//mediapipe:macos": [
             "@com_github_glog_glog//:glog",
         ],
-        "//mediapipe:windows": [
+        "@mediapipe//mediapipe:windows": [
             "@com_github_glog_glog//:glog",
         ],
         "//conditions:default": [
@@ -182,15 +181,15 @@ cmake_external(
 alias(
     name = "opencv_binary",
     actual = select({
-        "//mediapipe:android_x86": "@android_opencv//:libopencv_x86",
-        "//mediapipe:android_x86_64": "@android_opencv//:libopencv_x86_64",
-        "//mediapipe:android_armeabi": "@android_opencv//:libopencv_armeabi-v7a",
-        "//mediapipe:android_arm": "@android_opencv//:libopencv_armeabi-v7a",
-        "//mediapipe:android_arm64": "@android_opencv//:libopencv_arm64-v8a",
-        "//mediapipe:ios": "@ios_opencv//:opencv",
-        "//mediapipe:macos": "@macos_opencv//:opencv",
-        "//mediapipe:windows": "@windows_opencv//:opencv",
-        "//conditions:default": "@linux_opencv//:opencv",
+        "@mediapipe//mediapipe:android_x86": "@android_opencv//:libopencv_x86",
+        "@mediapipe//mediapipe:android_x86_64": "@android_opencv//:libopencv_x86_64",
+        "@mediapipe//mediapipe:android_armeabi": "@android_opencv//:libopencv_armeabi-v7a",
+        "@mediapipe//mediapipe:android_arm": "@android_opencv//:libopencv_armeabi-v7a",
+        "@mediapipe//mediapipe:android_arm64": "@android_opencv//:libopencv_arm64-v8a",
+        "@mediapipe//mediapipe:ios": "@ios_opencv//:opencv",
+        "@mediapipe//mediapipe:macos": "@macos_opencv//:opencv",
+        "@mediapipe//mediapipe:windows": "@windows_opencv//:opencv",
+        "@mediapipe//conditions:default": "@linux_opencv//:opencv",
     }),
 )
 
@@ -198,13 +197,13 @@ cc_library(
     name = "libffmpeg",
     visibility = ["//visibility:public"],
     deps = select({
-        "//mediapipe:android_x86": [],
-        "//mediapipe:android_x86_64": [],
-        "//mediapipe:android_armeabi": [],
-        "//mediapipe:android_arm": [],
-        "//mediapipe:android_arm64": [],
-        "//mediapipe:ios": [],
-        "//mediapipe:macos": [
+        "@mediapipe//mediapipe:android_x86": [],
+        "@mediapipe//mediapipe:android_x86_64": [],
+        "@mediapipe//mediapipe:android_armeabi": [],
+        "@mediapipe//mediapipe:android_arm": [],
+        "@mediapipe//mediapipe:android_arm64": [],
+        "@mediapipe//mediapipe:ios": [],
+        "@mediapipe//mediapipe:macos": [
             "@macos_ffmpeg//:libffmpeg",
         ],
         "//conditions:default": [
