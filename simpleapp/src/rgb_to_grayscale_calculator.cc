@@ -6,29 +6,36 @@
 #include "mediapipe/framework/port/opencv_imgproc_inc.h"
 
 namespace mediapipe {
-    constexpr char kImageFrameTag[] = "IMAGE";
+    constexpr char kInputImageTag[] = "RGB";
+    constexpr char kOutputTag[] = "GRAYSCALE";
 
-    ::mediapipe::Status GetContract(CalculatorContract* cc) {
-        RET_CHECK(cc->Inputs().HasTag(kImageFrameTag));
-        RET_CHECK(cc->Outputs().HasTag(kImageFrameTag));
+    REGISTER_CALCULATOR(RGBToGrayScaleCalculator);
 
-        cc->Inputs().Tag(kImageFrameTag).Set<ImageFrame>();
-        cc->Outputs().Tag(kImageFrameTag).Set<ImageFrame>();
+    ::mediapipe::Status RGBToGrayScaleCalculator::GetContract(CalculatorContract* cc) {
+        RET_CHECK(cc->Inputs().HasTag(kInputImageTag));
+        RET_CHECK(cc->Outputs().HasTag(kOutputTag));
+
+        cc->Inputs().Tag(kInputImageTag).Set<ImageFrame>();
+        cc->Outputs().Tag(kOutputTag).Set<ImageFrame>();
+
+        LOG(INFO) << "Contract done.";
 
         return ::mediapipe::OkStatus();
     }
 
-    ::mediapipe::Status Open(CalculatorContext* cc) {
+    ::mediapipe::Status RGBToGrayScaleCalculator::Open(CalculatorContext* cc) {
         // nothing much to do right now, so just return
         // ok status
+
+        LOG(INFO) << "Calculator opened.";
         return ::mediapipe::OkStatus();
     }
 
-    ::mediapipe::Status Process(CalculatorContext* cc) {
-        RET_CHECK(cc->Inputs().Tag(kImageFrameTag).IsEmpty());
+    ::mediapipe::Status RGBToGrayScaleCalculator::Process(CalculatorContext* cc) {
+        RET_CHECK(! cc->Inputs().Tag(kInputImageTag).IsEmpty());
 
         // getting image frame from input
-        const ImageFrame& frame = cc->Inputs().Tag(kImageFrameTag).Get<ImageFrame>();
+        const ImageFrame& frame = cc->Inputs().Tag(kInputImageTag).Get<ImageFrame>();
         // converting image frame to opencv matrix
         cv::Mat mat = formats::MatView(&frame);
 
@@ -50,7 +57,7 @@ namespace mediapipe {
         converted.copyTo(result_mat);
 
         // sending result to output
-        cc->Outputs().Tag(kImageFrameTag).Add(result.release(), cc->InputTimestamp());
+        cc->Outputs().Tag(kOutputTag).Add(result.release(), cc->InputTimestamp());
 
         return ::mediapipe::OkStatus();
     }

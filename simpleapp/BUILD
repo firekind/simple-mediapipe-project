@@ -10,6 +10,7 @@ cc_library(
         "@mediapipe//mediapipe/framework/formats:image_frame_opencv",
         "@mediapipe//mediapipe/framework/port:opencv_imgproc",
     ],
+    alwayslink = True
 )
 
 cc_binary(
@@ -17,10 +18,12 @@ cc_binary(
     srcs = ["main.cc"],
     deps = [
         ":rgb_to_grayscale_calculator",
-        "@mediapipe//mediapipe/calculators/core:pass_through_calculator",
         "@mediapipe//mediapipe/framework:calculator_framework",
+        "@mediapipe//mediapipe/framework/formats:image_frame",
+        "@mediapipe//mediapipe/framework/formats:image_frame_opencv",
         "@mediapipe//mediapipe/framework/port:logging",
+        "@mediapipe//mediapipe/framework/port:opencv_highgui",
+        "@mediapipe//mediapipe/framework/port:opencv_video",
         "@mediapipe//mediapipe/framework/port:parse_text_proto",
-        "@mediapipe//mediapipe/framework/port:status",
     ],
 )
