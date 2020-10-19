@@ -13,7 +13,7 @@ cc_library(
 )
 
 cc_binary(
-    name = "simpletest",
+    name = "simpleapp",
     srcs = ["main.cc"],
     deps = [
         ":rgb_to_grayscale_calculator",

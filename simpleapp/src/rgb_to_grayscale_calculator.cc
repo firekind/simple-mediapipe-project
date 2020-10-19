@@ -1,4 +1,4 @@
-#include "simpletest/include/rgb_to_grayscale_calculator.h"
+#include "simpleapp/include/rgb_to_grayscale_calculator.h"
 
 #include "mediapipe/framework/calculator_framework.h"
 #include "mediapipe/framework/formats/image_frame.h"
